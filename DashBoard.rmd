@@ -4,97 +4,65 @@ output:
   flexdashboard::flex_dashboard:
     orientation : rows
     social: menu
-    source_code: embed
+    source_code: https://github.com/pramodht/Data-Visualization
     theme: paper
 runtime: shiny
 ---
 
-Included the Shiny with paper theme on the page.
-
 ```{r setup, include=FALSE}
+library(ggplot2)
 library(flexdashboard)
 library(plotly)
-library(ggplot2)
+
 Seasons <- read.csv("~/Documents/Data Visualization/Seasons.csv")
+Season1 <- read.csv("~/Documents/Data Visualization/Season1.csv")
 ```
 
+Dot Plots
+===================================================
 
-Good Wife dox plot
-====================================================
+Row 
+-------------------------------------
+    
+### Everything
+    
+```{r}
+ p <- ggplot(Season1,aes(EpisodeNumbers,Viewers))
+p+geom_point(aes(colour=Season1$Season))+ggtitle("No of Views Per TV Serial")
+```
+   
+Row {.tabset .tabset-fade}
+-------------------------------------
+   
+### Good Wife
+
 ```{r}
 p <- ggplot(Seasons,aes(Episodes,Good.Wife))+
   #ggplot(Seasons,aes(Episodes,Breaking.Bad))+
-  geom_point()
+  geom_point(color="blue")+ggtitle("No of Views Per Episode")
 ggplotly(p)
-```
-
-Breaking Bad dox plot
-====================================================
+```   
+ 
+### Breaking Bad
+    
 ```{r}
 p <- ggplot(Seasons,aes(Episodes,Breaking.Bad))+
   #ggplot(Seasons,aes(Episodes,Breaking.Bad))+
-  geom_point()
+  geom_point(color="orange")+ggtitle("No of Views Per Episode")
 ggplotly(p)
+
 ```
+
+
 
 Guage
 =====================================================
-
-
-
-
-Row
+Row{.tabset .tabset-fade}
 -----------------------------------------------------
 Good Wife Guages
 
 
-### Heighest Views
-
-```{r}
-
-heightestViews <- function(value){
-  maxvalue <- max(value)
-}
-
-AverageViews <- function(value){
-  maxvalue <- floor(mean(value))
-}
-
-LowestViews <- function(value){
-  maxvalue <- min(value)
-}
-gauge(heightestViews(Seasons$Good.Wife), min = 0, max = 20, symbol = '', gaugeSectors(
-  success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
-))
-```
-
-
-### Average Views
-```{r}
-gauge(AverageViews(Seasons$Good.Wife), min = 0, max = 20, symbol = '%', gaugeSectors(
-  success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
-))
-```
-
-
-
-### Lowest View
-```{r}
-gauge(LowestViews(Seasons$Good.Wife), min = 0, max = 20, symbol = '%', gaugeSectors(
-  success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
-))
-
-```
-
-
-
-Row
------------------------------------------------------
-Breaking Guages
-
-
-
-### Heighest Views
+### Heighest Season Views
 
 ```{r}
 
@@ -109,26 +77,64 @@ AverageViews <- function(value){
 LowestViews <- function(value){
   maxvalue <- min(value,na.rm = TRUE)
 }
+gauge(heightestViews(Seasons$Good.Wife), min = 0, max = 20, symbol = '', gaugeSectors(
+  success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
+))
+```
+
+
+### Average Season Views
+```{r}
+gauge(AverageViews(Seasons$Good.Wife), min = 0, max = 20, symbol = '', gaugeSectors(
+  success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
+))
+```
+
+
+
+### Lowest Season View
+```{r}
+gauge(LowestViews(Seasons$Good.Wife), min = 0, max = 20, symbol = '', gaugeSectors(
+  success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
+))
+
+```
+
+
+
+Row{.tabset .tabset-fade}
+-----------------------------------------------------
+Breaking Bad Guages
+
+
+
+### Heighest Season Views
+
+```{r}
 gauge(heightestViews(Seasons$Breaking.Bad), min = 0, max = 20, symbol = '', gaugeSectors(
   success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
 ))
 ```
 
 
-### Average Views
+### Average Season Views
 ```{r}
-gauge(AverageViews(Seasons$Breaking.Bad), min = 0, max = 20, symbol = '%', gaugeSectors(
+gauge(AverageViews(Seasons$Breaking.Bad), min = 0, max = 20, symbol = '', gaugeSectors(
   success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
 ))
 ```
 
 
 
-### Lowest View
+### Lowest Season View
 ```{r}
-gauge(LowestViews(Seasons$Breaking.Bad), min = 0, max = 20, symbol = '%', gaugeSectors(
+gauge(LowestViews(Seasons$Breaking.Bad), min = 0, max = 20, symbol = '', gaugeSectors(
   success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
 ))
 
 ```
+
+
+
+
 
