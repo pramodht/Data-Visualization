@@ -1,0 +1,134 @@
+---
+title: "flexdashboard: Shiny Embedding"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation : rows
+    social: menu
+    source_code: embed
+    theme: paper
+runtime: shiny
+---
+
+Included the Shiny with paper theme on the page.
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(plotly)
+library(ggplot2)
+Seasons <- read.csv("~/Documents/Data Visualization/Seasons.csv")
+```
+
+
+Good Wife dox plot
+====================================================
+```{r}
+p <- ggplot(Seasons,aes(Episodes,Good.Wife))+
+  #ggplot(Seasons,aes(Episodes,Breaking.Bad))+
+  geom_point()
+ggplotly(p)
+```
+
+Breaking Bad dox plot
+====================================================
+```{r}
+p <- ggplot(Seasons,aes(Episodes,Breaking.Bad))+
+  #ggplot(Seasons,aes(Episodes,Breaking.Bad))+
+  geom_point()
+ggplotly(p)
+```
+
+Guage
+=====================================================
+
+
+
+
+Row
+-----------------------------------------------------
+Good Wife Guages
+
+
+### Heighest Views
+
+```{r}
+
+heightestViews <- function(value){
+  maxvalue <- max(value)
+}
+
+AverageViews <- function(value){
+  maxvalue <- floor(mean(value))
+}
+
+LowestViews <- function(value){
+  maxvalue <- min(value)
+}
+gauge(heightestViews(Seasons$Good.Wife), min = 0, max = 20, symbol = '', gaugeSectors(
+  success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
+))
+```
+
+
+### Average Views
+```{r}
+gauge(AverageViews(Seasons$Good.Wife), min = 0, max = 20, symbol = '%', gaugeSectors(
+  success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
+))
+```
+
+
+
+### Lowest View
+```{r}
+gauge(LowestViews(Seasons$Good.Wife), min = 0, max = 20, symbol = '%', gaugeSectors(
+  success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
+))
+
+```
+
+
+
+Row
+-----------------------------------------------------
+Breaking Guages
+
+
+
+### Heighest Views
+
+```{r}
+
+heightestViews <- function(value){
+  maxvalue <- max(value,na.rm = TRUE)
+}
+
+AverageViews <- function(value){
+  maxvalue <- floor(mean(value,na.rm = TRUE))
+}
+
+LowestViews <- function(value){
+  maxvalue <- min(value,na.rm = TRUE)
+}
+gauge(heightestViews(Seasons$Breaking.Bad), min = 0, max = 20, symbol = '', gaugeSectors(
+  success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
+))
+```
+
+
+### Average Views
+```{r}
+gauge(AverageViews(Seasons$Breaking.Bad), min = 0, max = 20, symbol = '%', gaugeSectors(
+  success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
+))
+```
+
+
+
+### Lowest View
+```{r}
+gauge(LowestViews(Seasons$Breaking.Bad), min = 0, max = 20, symbol = '%', gaugeSectors(
+  success = c(8, 20), warning = c(4, 7), danger = c(0, 3)
+))
+
+```
+
