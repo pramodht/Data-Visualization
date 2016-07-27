@@ -1,0 +1,125 @@
+---
+title: "Problemset6"
+author: "Pramodhkumar Thammishetty"
+date: "7/26/2016"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation : rows
+    social: menu
+    source_code: https://github.com/pramodht/Data-Visualization #my Github location of this file
+    theme: paper
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(flexdashboard)
+library(plotly) #hover on view
+library(ggmap)
+library(shiny)
+library(raster)
+library(zoo)
+library(rasterVis)
+library(googleVis)
+#op <- options(gvis.plot.tag = "chart")
+require(datasets)
+states <- data.frame(state.name, state.x77)
+```
+
+
+```{r}
+
+```
+
+Interactive Maps
+=================================================
+
+
+```{r}
+selectInput("Region", 'Region Variable', c("Harrisburg","Seattle", "Washington DC"),selected = "Harrisburg")
+
+selectInput("Type", 'Type Variable', c("toner","watercolor", "hybrid","satellite"),selected = "toner")
+
+```
+
+Row {.tabset .tabset-fade}
+-------------------------------------
+
+### Toner
+```{r}
+
+renderPlot(
+    { 
+      qmap(input$Region, zoom = 14,maptype = "toner")
+    }
+    )
+
+
+```
+
+###Satellite
+```{r}
+renderPlot(
+    {
+      qmap(input$Region, zoom = 14,maptype = "satellite")
+    }
+    )
+```
+
+### Hybrid
+
+```{r}
+renderPlot(
+    {
+      qmap(input$Region, zoom = 14,maptype = "hybrid")
+    }
+    )
+```
+
+### watercolor
+
+```{r}
+renderPlot(
+    {
+      qmap(input$Region, zoom = 14,maptype = "watercolor")
+    }
+    )
+```
+
+PLOT
+===================================
+Row {.tabset .tabset-fade}
+-------------------------------------
+###Global Income Chart
+```{r}
+GeoStates <- gvisGeoChart(states, "state.name", "Income",options=list(region="US", displayMode="regions", resolution="provinces",width=600, height=400))
+plot(GeoStates)
+
+```
+
+### Motion Chart
+```{r}
+M <- gvisMotionChart(Fruits, 'Fruit', 'Year',
+         options=list(width=400, height=350))
+
+plot(M)
+```
+
+
+
+PLOTLY
+=======================
+Row {.tabset .tabset-fade}
+-------------------------------------
+### Vertical Histogram 
+```{r}
+
+plot_ly(y = rnorm(50), type = "histogram")
+```
+
+### Histogram
+
+```{r}
+plot_ly(x = rnorm(50), type = "histogram")
+```
+
